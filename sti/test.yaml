@@ -8,7 +8,7 @@ spec:
       hostPath:
          path: "/tmp/tf"
   containers:
-    - image: gcr.io/kuar-demo/kuard-amd64:blue
+    - image: denkay123/dk:tf1.15-py3.6
       name: test-pod
       volumeMounts:
        - mountPath: "/data"
@@ -19,8 +19,8 @@ spec:
          protocol: TCP
       resources:
         requests:
-          cpu: 100m
-          memory: 128Mi
+          cpu: 500m
+          memory: 512Mi
         limits:
-          cpu: 200m
-          memory: 256Mi
+          cpu: 500m
+          memory: 512Mi
