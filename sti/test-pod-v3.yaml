@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-pod-v3
+  labels:
+    run: test-pod-v3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: test-pod-v3
+  template:
+     metadata:
+       labels:
+         run: test-pod-v3
+         monitored-by: hpe-csi
+     spec:
+        containers:
+        - name: test-pod-v3
+          image: denkay123/dk:tf1.15-py3.6
+          resources:
+            limits:
+              memory: "1Gi"
+              cpu: "1"
+            requests:
+              memory: "1Gi"
+              cpu: "1"
+          ports:
+          - containerPort: 8888
+            protocol: TCP
+          - containerPort: 8080
+            protocol: TCP
+          - containerPort: 22
+            protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-pod-v3
+  labels:
+    hpecp.hpe.com/hpecp-internal-gateway: "true"
+spec:
+  selector:
+    run: test-pod-v3
+  ports:
+  - name: jupyter
+    protocol: TCP
+    port: 8888
+    targetPort: 8888
+  - name: vnc
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
+  - name: ssh
+    protocol: TCP
+    port: 22
+    targetPort: 22
+  type: NodePort
