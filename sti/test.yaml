@@ -14,7 +14,7 @@ spec:
        - mountPath: "/data"
          name:  "kuard-data"
       ports:
-       - containerPort: 8080
+       - containerPort: 8888
          name: http
          protocol: TCP
       resources:
